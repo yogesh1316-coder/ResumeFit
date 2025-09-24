@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeFit - AI-Powered Resume Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='enhanced_style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // Pass NLTK analysis data to JavaScript
+       window.nltk_analysis = {{ nltk_analysis | tojson | safe }};
+    </script>
+</head>
+<body>
+    <!-- Modern Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-robot"></i>
+                <span>ResumeFit</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">
+                        <i class="fas fa-info-circle"></i>
+                        About
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">
+                        <i class="fas fa-envelope"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section active-section">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">🚀 ResumeFit - AI-Powered Resume Analyzer</h1>
+                <p class="hero-subtitle">Transform your resume with intelligent analysis and get matched to your dream job</p>
+                <div class="hero-features">
+                    <div class="feature">
+                        <i class="fas fa-brain"></i>
+                        <h3>AI Analysis</h3>
+                        <p>Advanced NLP and machine learning algorithms</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Smart Scoring</h3>
+                        <p>Comprehensive scoring with detailed breakdowns</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Suggestions</h3>
+                        <p>Personalized improvement recommendations</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-file-alt"></i>
+                        <h3>Multi-Format</h3>
+                        <p>Support for PDF and DOCX files</p>
+                    </div>
+                </div>
+                <button class="cta-button" onclick="showSection('dashboard')">
+                    <i class="fas fa-rocket"></i>
+                    Get Started
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard-section">
+        <div class="dashboard-header">
+            <h2><i class="fas fa-tachometer-alt"></i> Resume Analysis Dashboard</h2>
+            <p>Upload your resume for comprehensive AI-powered analysis</p>
+        </div>
+        
+        <div class="container">
+        <form method="post" enctype="multipart/form-data" class="upload-form">
+            <div class="upload-section">
+                <input type="file" id="resume_file" name="resume_file" accept=".pdf,.docx" style="display: none;">
+                <!-- Drop zone will be created by JavaScript -->
+                
+                <div class="settings">
+                    <label>
+                        <input type="checkbox" id="auto-analyze" checked>
+                        Auto-analyze on file selection
+                    </label>
+                </div>
+            </div>
+
+            <div class="manual-corrections">
+                <h3>📝 Manual Corrections (Optional)</h3>
+                <div class="correction-grid">
+                    {% if summary.name == "Not found" or not summary.name %}
+                    <div class="correction-field">
+                        <label for="manual_name">👤 Full Name:</label>
+                        <input type="text" id="manual_name" name="manual_name" placeholder="Enter your full name">
+                    </div>
+                    {% endif %}
+                    
+                    {% if summary.locations == "Not found" or not summary.locations %}
+                    <div class="correction-field">
+                        <label for="manual_location">📍 Location:</label>
+                        <input type="text" id="manual_location" name="manual_location" placeholder="City, State/Country">
+                    </div>
+                    {% endif %}
+                    
+                    {% if summary.dates == "Not found" or not summary.dates %}
+                    <div class="correction-field">
+                        <label for="manual_dates">📅 Important Dates:</label>
+                        <input type="text" id="manual_dates" name="manual_dates" placeholder="Graduation year, work experience dates">
+                    </div>
+                    {% endif %}
+                    
+                    {% if summary.percent == "Not found" or not summary.percent %}
+                    <div class="correction-field">
+                        <label for="manual_percent">🎯 Achievements (%):</label>
+                        <input type="text" id="manual_percent" name="manual_percent" placeholder="Academic percentage, improvement metrics">
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <button class="analyze-btn" type="submit">
+                <span class="btn-icon">🔍</span>
+                Analyze Resume
+            </button>
+        </form>
+
+        {% if match_percentage %}
+        <div class="results-section">
+            <h2>📊 Analysis Results</h2>
+            
+            <!-- Main Score Card -->
+            <div class="progress-card">
+                <div class="progress-label">Resume Match Score</div>
+                <div class="progress-bar-bg">
+                   <div class="progress-bar-fill" style="width: {{ match_percentage }}%"></div>
+                </div>
+                <div class="progress-value">{{ match_percentage }}%</div>
+            </div>
+
+            <!-- Score Breakdown Section -->
+            {% if score_breakdown %}
+            <div class="score-breakdown-section">
+                <h3>📊 How Your Score Was Calculated</h3>
+                
+                <!-- Scoring Formula -->
+                <div class="scoring-formula">
+                    <div class="formula-card">
+                        <h4>🧮 Scoring Formula</h4>
+                        <div class="formula-content">
+                            <div class="formula-part">
+                                <span class="formula-component">AI Job Match Analysis</span>
+                                <span class="formula-weight">60%</span>
+                                <span class="formula-value">{{ score_breakdown.ml_confidence }}%</span>
+                            </div>
+                            <div class="formula-operator">+</div>
+                            <div class="formula-part">
+                                <span class="formula-component">Resume Completeness</span>
+                                <span class="formula-weight">40%</span>
+                                <span class="formula-value">{{ score_breakdown.completeness_score }}%</span>
+                            </div>
+                            <div class="formula-equals">=</div>
+                            <div class="formula-result">
+                                <span class="formula-final">Final Score: {{ match_percentage }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Component Breakdown -->
+                <div class="components-breakdown">
+                    <h4>📋 Resume Completeness Breakdown ({{ score_breakdown.completeness_score }}/100 points)</h4>
+                    <div class="components-grid">
+                        
+                        <!-- Name Component -->
+                        <div class="component-card {% if score_breakdown.components.name.found %}component-found{% else %}component-missing{% endif %}">
+                            <div class="component-header">
+                                <span class="component-icon">👤</span>
+                                <span class="component-title">Full Name</span>
+                                <span class="component-score">{{ score_breakdown.components.name.score }}/{{ score_breakdown.components.name.max }}</span>
+                            </div>
+                            <div class="component-status">
+                                {% if score_breakdown.components.name.found %}
+                                    <span class="status-found">✅ Found: {{ score_breakdown.components.name.value }}</span>
+                                {% else %}
+                                    <span class="status-missing">❌ Not detected in resume</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Location Component -->
+                        <div class="component-card {% if score_breakdown.components.location.found %}component-found{% else %}component-missing{% endif %}">
+                            <div class="component-header">
+                                <span class="component-icon">📍</span>
+                                <span class="component-title">Location</span>
+                                <span class="component-score">{{ score_breakdown.components.location.score }}/{{ score_breakdown.components.location.max }}</span>
+                            </div>
+                            <div class="component-status">
+                                {% if score_breakdown.components.location.found %}
+                                    <span class="status-found">✅ Found: {{ score_breakdown.components.location.value }}</span>
+                                {% else %}
+                                    <span class="status-missing">❌ Add your city and country</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Dates Component -->
+                        <div class="component-card {% if score_breakdown.components.dates.found %}component-found{% else %}component-missing{% endif %}">
+                            <div class="component-header">
+                                <span class="component-icon">📅</span>
+                                <span class="component-title">Important Dates</span>
+                                <span class="component-score">{{ score_breakdown.components.dates.score }}/{{ score_breakdown.components.dates.max }}</span>
+                            </div>
+                            <div class="component-status">
+                                {% if score_breakdown.components.dates.found %}
+                                    <span class="status-found">✅ Found: {{ score_breakdown.components.dates.value }}</span>
+                                {% else %}
+                                    <span class="status-missing">❌ Add graduation/work dates</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Skills Component -->
+                        <div class="component-card {% if score_breakdown.components.skills.found %}component-found{% else %}component-missing{% endif %}">
+                            <div class="component-header">
+                                <span class="component-icon">💻</span>
+                                <span class="component-title">Technical Skills</span>
+                                <span class="component-score">{{ score_breakdown.components.skills.score }}/{{ score_breakdown.components.skills.max }}</span>
+                            </div>
+                            <div class="component-status">
+                                {% if score_breakdown.components.skills.found %}
+                                    <span class="status-found">✅ Found {{ score_breakdown.components.skills.value|length }} skills: 
+                                        {% for skill in score_breakdown.components.skills.value[:5] %}
+                                            {{ skill }}{% if not loop.last %}, {% endif %}
+                                        {% endfor %}
+                                        {% if score_breakdown.components.skills.value|length > 5 %}...{% endif %}
+                                    </span>
+                                {% else %}
+                                    <span class="status-missing">❌ Add programming languages/technologies</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Experience Component -->
+                        <div class="component-card {% if score_breakdown.components.experience.found %}component-found{% else %}component-missing{% endif %}">
+                            <div class="component-header">
+                                <span class="component-icon">🏢</span>
+                                <span class="component-title">Experience Level</span>
+                                <span class="component-score">{{ score_breakdown.components.experience.score }}/{{ score_breakdown.components.experience.max }}</span>
+                            </div>
+                            <div class="component-status">
+                                {% if score_breakdown.components.experience.found %}
+                                    <span class="status-found">✅ Detected: {{ score_breakdown.components.experience.value }}</span>
+                                {% else %}
+                                    <span class="status-neutral">ℹ️ Entry Level detected: {{ score_breakdown.components.experience.value }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Achievements Component -->
+                        <div class="component-card {% if score_breakdown.components.achievements.found %}component-found{% else %}component-missing{% endif %}">
+                            <div class="component-header">
+                                <span class="component-icon">🎯</span>
+                                <span class="component-title">Achievements</span>
+                                <span class="component-score">{{ score_breakdown.components.achievements.score }}/{{ score_breakdown.components.achievements.max }}</span>
+                            </div>
+                            <div class="component-status">
+                                {% if score_breakdown.components.achievements.found %}
+                                    <span class="status-found">✅ Found: {{ score_breakdown.components.achievements.value }}</span>
+                                {% else %}
+                                    <span class="status-missing">❌ Add percentages/metrics</span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Scoring Tips -->
+                <div class="scoring-tips">
+                    <h4>💡 Tips to Improve Your Score</h4>
+                    <ul class="tips-list">
+                        {% if not score_breakdown.components.name.found %}
+                            <li>🔸 Make sure your full name is clearly visible at the top of your resume</li>
+                        {% endif %}
+                        {% if not score_breakdown.components.location.found %}
+                            <li>🔸 Include your city and country in your contact information</li>
+                        {% endif %}
+                        {% if not score_breakdown.components.dates.found %}
+                            <li>🔸 Add graduation dates and employment periods to show your timeline</li>
+                        {% endif %}
+                        {% if not score_breakdown.components.skills.found %}
+                            <li>🔸 List specific programming languages, frameworks, and technologies you know</li>
+                        {% elif score_breakdown.components.skills.value|length < 5 %}
+                            <li>🔸 Consider adding more technical skills to showcase your versatility</li>
+                        {% endif %}
+                        {% if not score_breakdown.components.achievements.found %}
+                            <li>🔸 Include quantifiable achievements (percentages, improvements, numbers)</li>
+                        {% endif %}
+                        {% if score_breakdown.ml_confidence < 80 %}
+                            <li>🔸 Use more job-specific keywords relevant to your target role</li>
+                            <li>🔸 Structure your resume with clear sections (Experience, Education, Skills)</li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if job_match %}
+            <div class="job-card">
+                <span class="job-icon">💼</span>
+                <span class="job-label">Best Job Match:</span>
+                <span class="job-value">{{ job_match }}</span>
+            </div>
+            {% endif %}
+
+            <!-- NLTK Analysis Results -->
+            {% if nltk_analysis %}
+            <div class="analysis-grid">
+                <!-- Sentiment Analysis -->
+                {% if nltk_analysis.sentiment %}
+                <div class="analysis-card">
+                    <h4>💭 Sentiment Analysis</h4>
+                    <div class="sentiment-breakdown">
+                        <div class="sentiment-item positive">
+                            <span class="sentiment-label">Positive:</span>
+                            <span class="sentiment-value">{{ "%.1f"|format(nltk_analysis.sentiment.positive * 100) }}%</span>
+                        </div>
+                        <div class="sentiment-item neutral">
+                            <span class="sentiment-label">Neutral:</span>
+                            <span class="sentiment-value">{{ "%.1f"|format(nltk_analysis.sentiment.neutral * 100) }}%</span>
+                        </div>
+                        <div class="sentiment-item negative">
+                            <span class="sentiment-label">Negative:</span>
+                            <span class="sentiment-value">{{ "%.1f"|format(nltk_analysis.sentiment.negative * 100) }}%</span>
+                        </div>
+                    </div>
+                    <div class="sentiment-overall">
+                        <strong>Overall Score: {{ "%.2f"|format(nltk_analysis.sentiment.compound) }}</strong>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Text Statistics -->
+                {% if nltk_analysis.statistics %}
+                <div class="analysis-card">
+                    <h4>📈 Text Statistics</h4>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-value">{{ nltk_analysis.statistics.word_count }}</span>
+                            <span class="stat-label">Words</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">{{ nltk_analysis.statistics.sentence_count }}</span>
+                            <span class="stat-label">Sentences</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value">{{ nltk_analysis.statistics.avg_sentence_length }}</span>
+                            <span class="stat-label">Avg Length</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Key Phrases -->
+                {% if nltk_analysis.key_phrases %}
+                <div class="analysis-card">
+                    <h4>🔑 Key Phrases</h4>
+                    <div class="phrases-container">
+                        {% for phrase in nltk_analysis.key_phrases[:8] %}
+                        <span class="key-phrase">{{ phrase }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- NLTK Entities -->
+                {% if nltk_analysis.entities %}
+                <div class="analysis-card">
+                    <h4>🏷️ Named Entities</h4>
+                    <div class="entities-container">
+                        {% for entity in nltk_analysis.entities[:10] %}
+                        <span class="entity-tag">
+                            <strong>{{ entity.text }}</strong> 
+                            <small>({{ entity.label }})</small>
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Keyword Suggestions and Improvement Guide -->
+            {% if keyword_suggestions %}
+            <div class="keyword-suggestions-section">
+                <h3>🎯 Keyword Suggestions & Improvement Guide</h3>
+                
+                <!-- Role-specific Keywords -->
+                <div class="keywords-container">
+                    <div class="keywords-header">
+                        <h4>🔑 Recommended Keywords for {{ keyword_suggestions.role }}</h4>
+                        <p class="keywords-description">Add these relevant keywords to improve your resume's ATS compatibility and recruiter appeal:</p>
+                    </div>
+                    
+                    <div class="keywords-grid">
+                        <!-- Technical Skills Keywords -->
+                        {% if keyword_suggestions.missing_technical_skills %}
+                        <div class="keyword-category">
+                            <h5>💻 Technical Skills to Add</h5>
+                            <div class="keyword-tags">
+                                {% for skill in keyword_suggestions.missing_technical_skills %}
+                                <span class="keyword-tag technical">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Soft Skills Keywords -->
+                        {% if keyword_suggestions.missing_soft_skills %}
+                        <div class="keyword-category">
+                            <h5>🤝 Soft Skills to Highlight</h5>
+                            <div class="keyword-tags">
+                                {% for skill in keyword_suggestions.missing_soft_skills %}
+                                <span class="keyword-tag soft">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Action Verbs -->
+                        {% if keyword_suggestions.missing_action_verbs %}
+                        <div class="keyword-category">
+                            <h5>⚡ Power Action Verbs</h5>
+                            <div class="keyword-tags">
+                                {% for verb in keyword_suggestions.missing_action_verbs %}
+                                <span class="keyword-tag action">{{ verb }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Certifications -->
+                        {% if keyword_suggestions.suggested_certifications %}
+                        <div class="keyword-category">
+                            <h5>🏆 Relevant Certifications</h5>
+                            <div class="keyword-tags">
+                                {% for cert in keyword_suggestions.suggested_certifications %}
+                                <span class="keyword-tag certification">{{ cert }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Skill Gap Analysis -->
+                {% if keyword_suggestions.skill_gap_analysis %}
+                <div class="skill-gap-analysis">
+                    <h4>📈 Your Skill Profile Analysis</h4>
+                    <div class="gap-analysis-grid">
+                        <div class="strong-areas">
+                            <h5>✅ Your Strong Areas ({{ keyword_suggestions.current_skills_count }} skills detected)</h5>
+                            <div class="skill-tags">
+                                {% for skill in keyword_suggestions.skill_gap_analysis.strong_areas %}
+                                <span class="skill-tag found">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="improvement-areas">
+                            <h5>🎯 Priority Skills to Add</h5>
+                            <div class="skill-tags">
+                                {% for skill in keyword_suggestions.skill_gap_analysis.improvement_areas %}
+                                <span class="skill-tag priority">{{ skill }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Detailed Improvement Suggestions -->
+                {% if keyword_suggestions.improvement_suggestions %}
+                <div class="improvement-suggestions">
+                    <h4>💡 Detailed Improvement Guide</h4>
+                    <div class="suggestions-accordion">
+                        {% for suggestion in keyword_suggestions.improvement_suggestions %}
+                        <div class="suggestion-card priority-{{ suggestion.priority|lower }}">
+                            <div class="suggestion-header">
+                                <span class="suggestion-category">{{ suggestion.category }}</span>
+                                <span class="suggestion-priority priority-{{ suggestion.priority|lower }}">{{ suggestion.priority }} Priority</span>
+                            </div>
+                            <div class="suggestion-content">
+                                <p class="suggestion-description">{{ suggestion.description }}</p>
+                                <div class="action-items">
+                                    <h6>Action Steps:</h6>
+                                    <ul>
+                                        {% for action in suggestion.action_items %}
+                                        <li>{{ action }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="suggestion-impact">
+                                    <strong>💎 Impact:</strong> {{ suggestion.impact }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Quick Tips -->
+                <div class="quick-tips">
+                    <h4>⚡ Quick Tips for Maximum Impact</h4>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <div class="tip-icon">📝</div>
+                            <div class="tip-content">
+                                <h5>Use Keywords Naturally</h5>
+                                <p>Integrate suggested keywords into your experience descriptions rather than just listing them.</p>
+                            </div>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">📊</div>
+                            <div class="tip-content">
+                                <h5>Quantify Achievements</h5>
+                                <p>Add numbers, percentages, and measurable outcomes to demonstrate your impact.</p>
+                            </div>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">🎯</div>
+                            <div class="tip-content">
+                                <h5>Match Job Descriptions</h5>
+                                <p>Tailor your resume keywords to match specific job postings you're applying to.</p>
+                            </div>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">🔄</div>
+                            <div class="tip-content">
+                                <h5>Update Regularly</h5>
+                                <p>Keep your resume current with latest technologies and industry trends.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if missing_entities and missing_entities|length > 0 %}
+        <div class="entities-card">
+            <span class="entities-icon">🧩</span>
+            <span class="entities-label">Entities to Add:</span>
+            <span class="entities-value">
+                {% for ent in missing_entities %}
+                    <span class="entity-pill">{{ ent }}</span>
+                {% endfor %}
+            </span>
+        </div>
+        {% endif %}
+
+        {% if suggestions %}
+        <div class="suggestions-card">
+            <span class="suggestions-icon">💡</span>
+            <span class="suggestions-label">Suggestions for Improvement:</span>
+            <ul>
+                {% for suggestion in suggestions %}
+                    <li>{{ suggestion }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-header">
+                <h2><i class="fas fa-info-circle"></i> About ResumeFit</h2>
+                <p>Simplifying and enhancing the job-seeking process with AI</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-main-description">
+                    <div class="about-intro-card">
+                        <div class="about-intro-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="about-intro-content">
+                            <h3>What is ResumeFit?</h3>
+                            <p>ResumeFit is an intelligent platform designed to simplify and enhance the job-seeking process. It uses advanced Artificial Intelligence and Natural Language Processing (NLP) techniques to analyze resumes and match them with the most suitable job roles. By comparing a candidate's skills, experience, and qualifications with job descriptions, the system ensures accurate and efficient recommendations.</p>
+                            
+                            <p>This project not only saves time for job seekers but also helps recruiters quickly identify the right talent. With features like smart matching, skill gap analysis, and role suggestions, the AI Resume Job Matcher bridges the gap between candidates and employers, making recruitment faster, smarter, and more effective.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-grid">
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Advanced AI Technology</h3>
+                        <p>Our platform uses cutting-edge Natural Language Processing (NLTK) and Machine Learning algorithms to analyze resumes with unprecedented accuracy. We extract key information, predict job roles, and provide intelligent insights.</p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>Comprehensive Analysis</h3>
+                        <p>Get detailed breakdowns including ML-based job matching (60%) and completeness scoring (40%). Our transparent scoring system shows exactly how your resume performs across different criteria.</p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h3>Smart Recommendations</h3>
+                        <p>Receive personalized keyword suggestions and improvement guidance based on industry standards and job market trends. Our AI identifies gaps and suggests enhancements to boost your success rate.</p>
+                    </div>
+                    
+                    <div class="about-card">
+                        <div class="about-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Bridging the Gap</h3>
+                        <p>Making recruitment faster, smarter, and more effective by connecting the right candidates with the right employers through intelligent matching and skill gap analysis.</p>
+                    </div>
+                </div>
+                
+                <div class="tech-stack">
+                    <h3>Powered By</h3>
+                    <div class="tech-badges">
+                        <span class="tech-badge">Python</span>
+                        <span class="tech-badge">Flask</span>
+                        <span class="tech-badge">NLTK</span>
+                        <span class="tech-badge">spaCy</span>
+                        <span class="tech-badge">scikit-learn</span>
+                        <span class="tech-badge">Chart.js</span>
+                        <span class="tech-badge">JavaScript</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="contact-header">
+                <h2><i class="fas fa-envelope"></i> Get In Touch</h2>
+                <p>Have questions or suggestions? We'd love to hear from you!</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <h3>Contact Information</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <strong>Email</strong>
+                                <p>hsegoy1316@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-github"></i>
+                            <div>
+                                <strong>GitHub</strong>
+                                <p><a href="https://github.com/SilentProgrammer-max/AI-Powered-Resume-Analyzer" target="_blank">View Source Code</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <strong>Response Time</strong>
+                                <p>We typically respond within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <form class="contact-form" onsubmit="submitContactForm(event)">
+                            <div class="form-group">
+                                <label for="contact-name">Name</label>
+                                <input type="text" id="contact-name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email">Email</label>
+                                <input type="email" id="contact-email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-subject">Subject</label>
+                                <select id="contact-subject" name="subject" required>
+                                    <option value="">Select a topic</option>
+                                    <option value="general">General Inquiry</option>
+                                    <option value="bug">Bug Report</option>
+                                    <option value="feature">Feature Request</option>
+                                    <option value="support">Technical Support</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-message">Message</label>
+                                <textarea id="contact-message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="contact-submit-btn">
+                                <i class="fas fa-paper-plane"></i>
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-robot"></i>
+                        <span>ResumeFit</span>
+                    </div>
+                    <p>Empowering careers with intelligent resume analysis</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li>AI Analysis</li>
+                        <li>Smart Scoring</li>
+                        <li>Keyword Suggestions</li>
+                        <li>Multi-Format Support</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ResumeFit. All rights reserved. | Built with ❤️ using Flask & AI</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Include Enhanced JavaScript -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        // Navigation functionality
+        function showSection(sectionId) {
+            // Hide all sections explicitly
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active-section');
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active-section');
+                targetSection.style.display = 'block';
+            }
+            
+            // Update navbar active state
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`[href="#${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Close mobile menu if open
+            document.querySelector('.nav-menu').classList.remove('active');
+            document.querySelector('.hamburger').classList.remove('active');
+            
+            // Scroll to top when switching sections
+            window.scrollTo(0, 0);
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Navbar links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                showSection(targetId);
+            });
+        });
+
+        // Contact form submission
+        function submitContactForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Create Gmail compose URL with form data
+            const subject = encodeURIComponent(`ResumeFit Contact: ${data.subject || 'General Inquiry'}`);
+            const body = encodeURIComponent(`Name: ${data.name}
+Email: ${data.email}
+Subject: ${data.subject}
+
+Message:
+${data.message}
+
+--
+Sent from ResumeFit Contact Form`);
+            
+            // Open Gmail in new tab
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=hsegoy1316@gmail.com&su=${subject}&body=${body}`;
+            window.open(gmailUrl, '_blank');
+            
+            // Show success message
+            alert('Gmail will open in a new tab. Please complete sending your message there.');
+            event.target.reset();
+        }
+
+        // Initialize - show home section by default
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide all sections first
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active-section');
+                section.style.display = 'none';
+            });
+            
+            // Show home section by default
+            showSection('home');
+            
+            // Add click handler for Get Started button
+            const getStartedBtn = document.querySelector('.cta-button');
+            if (getStartedBtn) {
+                getStartedBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showSection('dashboard');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
