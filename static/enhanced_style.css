@@ -186,17 +186,38 @@ section.active-section {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.feature:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 40px rgba(79, 172, 254, 0.4);
+    border: 1px solid rgba(79, 172, 254, 0.5);
 }
 
 .feature i {
     font-size: 3rem;
     margin-bottom: 1rem;
     color: #4facfe;
+    transition: all 0.3s ease;
+}
+
+.feature:hover i {
+    color: #ffffff;
+    transform: scale(1.1);
 }
 
 .feature h3 {
     font-size: 1.3rem;
     margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.feature:hover h3 {
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .cta-button {
@@ -2308,11 +2329,12 @@ header h1 {
 .footer {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%) !important;
     color: white !important;
-    padding: 4rem 0 2rem !important;
+    padding: 7rem 0 2rem !important;
     margin-top: 0 !important;
     border-top: 4px solid #4facfe !important;
     box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2) !important;
     position: relative !important;
+    overflow: visible !important;
 }
 
 .footer::before {
@@ -2346,7 +2368,8 @@ header h1 {
     max-width: 1200px !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    padding: 0 !important;
+    padding: 2rem 0 0 0 !important;
+    overflow: visible !important;
 }
 
 .footer-section {
@@ -2360,7 +2383,7 @@ header h1 {
 }
 
 .footer-section:hover {
-    transform: translateY(-8px) !important;
+    transform: translateY(-4px) !important;
     box-shadow: 0 15px 40px rgba(79, 172, 254, 0.5) !important;
     background: rgba(255, 255, 255, 0.3) !important;
 }

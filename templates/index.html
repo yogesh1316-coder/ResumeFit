@@ -6,12 +6,10 @@
     <title>ResumeFit - AI-Powered Resume Analyzer</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='enhanced_style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script>
-        // Pass NLTK analysis data to JavaScript
-       window.nltk_analysis = {{ nltk_analysis | tojson | safe }};
-    </script>
 </head>
-<body>
+<body 
+    data-nltk-analysis="{{ nltk_analysis | tojson | e }}"
+    data-has-results="{{ 'true' if match_percentage else 'false' }}">
     <!-- Modern Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
@@ -157,7 +155,7 @@
             <div class="progress-card">
                 <div class="progress-label">Resume Match Score</div>
                 <div class="progress-bar-bg">
-                   <div class="progress-bar-fill" style="width: {{ match_percentage }}%"></div>
+                   <div class="progress-bar-fill" data-width="{{ match_percentage }}"></div>
                 </div>
                 <div class="progress-value">{{ match_percentage }}%</div>
             </div>
@@ -864,8 +862,33 @@ Sent from ResumeFit Contact Form`);
                 section.style.display = 'none';
             });
             
-            // Show home section by default
-            showSection('home');
+            // Check if analysis results are present using data attribute
+            const hasResults = document.body.getAttribute('data-has-results') === 'true';
+            
+            // Initialize window.nltk_analysis from data attribute
+            try {
+                const nltkData = document.body.getAttribute('data-nltk-analysis');
+                window.nltk_analysis = nltkData ? JSON.parse(nltkData) : {};
+            } catch (e) {
+                console.warn('Failed to parse NLTK analysis data:', e);
+                window.nltk_analysis = {};
+            }
+            
+            // Set progress bar width using data attribute
+            const progressBarFill = document.querySelector('.progress-bar-fill');
+            if (progressBarFill) {
+                const width = progressBarFill.getAttribute('data-width');
+                if (width) {
+                    progressBarFill.style.width = width + '%';
+                }
+            }
+            
+            // Show dashboard if results are available, otherwise show home
+            if (hasResults) {
+                showSection('dashboard');
+            } else {
+                showSection('home');
+            }
             
             // Add click handler for Get Started button
             const getStartedBtn = document.querySelector('.cta-button');
