@@ -17,7 +17,16 @@ from docx import Document
 import os
 
 app = Flask(__name__)
-nlp = spacy.load('en_core_web_sm')
+
+# Load spaCy model with error handling for deployment
+try:
+    nlp = spacy.load('en_core_web_sm')
+    print("✅ spaCy model loaded successfully")
+except OSError:
+    print("❌ en_core_web_sm model not found. Installing...")
+    os.system("python -m spacy download en_core_web_sm")
+    nlp = spacy.load('en_core_web_sm')
+    print("✅ spaCy model installed and loaded")
 
 # Initialize NLTK components
 try:
@@ -1523,4 +1532,5 @@ def index():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
