@@ -1,0 +1,163 @@
+/* Simple icon replacements for Font Awesome - for better loading performance */
+
+/* Robot icon replacement */
+.icon-robot::before {
+    content: "🤖";
+    font-style: normal;
+}
+
+/* Home icon replacement */
+.icon-home::before {
+    content: "🏠";
+    font-style: normal;
+}
+
+/* Features icon replacement */
+.icon-features::before {
+    content: "⚡";
+    font-style: normal;
+}
+
+/* About icon replacement */
+.icon-about::before {
+    content: "ℹ️";
+    font-style: normal;
+}
+
+/* Contact icon replacement */
+.icon-contact::before {
+    content: "📧";
+    font-style: normal;
+}
+
+/* Upload icon replacement */
+.icon-upload::before {
+    content: "📁";
+    font-style: normal;
+}
+
+/* Download icon replacement */
+.icon-download::before {
+    content: "💾";
+    font-style: normal;
+}
+
+/* Check mark icon replacement */
+.icon-check::before {
+    content: "✓";
+    font-style: normal;
+    color: #28a745;
+}
+
+/* Star icon replacement */
+.icon-star::before {
+    content: "⭐";
+    font-style: normal;
+}
+
+/* User icon replacement */
+.icon-user::before {
+    content: "👤";
+    font-style: normal;
+}
+
+/* Location icon replacement */
+.icon-location::before {
+    content: "📍";
+    font-style: normal;
+}
+
+/* Calendar icon replacement */
+.icon-calendar::before {
+    content: "📅";
+    font-style: normal;
+}
+
+/* Percentage icon replacement */
+.icon-percent::before {
+    content: "📊";
+    font-style: normal;
+}
+
+/* Fallback for any missing Font Awesome icons */
+[class*="fas"], [class*="fa-"] {
+    font-family: inherit;
+}
+
+/* Specific Font Awesome class replacements */
+.fas.fa-robot::before {
+    content: "🤖";
+}
+
+.fas.fa-home::before {
+    content: "🏠";
+}
+
+.fas.fa-star::before {
+    content: "⭐";
+}
+
+.fas.fa-cog::before {
+    content: "⚙️";
+}
+
+.fas.fa-info-circle::before {
+    content: "ℹ️";
+}
+
+.fas.fa-envelope::before {
+    content: "📧";
+}
+
+.fas.fa-upload::before {
+    content: "📁";
+}
+
+.fas.fa-download::before {
+    content: "💾";
+}
+
+.fas.fa-check::before {
+    content: "✓";
+    color: #28a745;
+}
+
+.fas.fa-user::before {
+    content: "👤";
+}
+
+.fas.fa-map-marker-alt::before {
+    content: "📍";
+}
+
+.fas.fa-calendar::before {
+    content: "📅";
+}
+
+.fas.fa-percentage::before {
+    content: "📊";
+}
+
+.fas.fa-chart-bar::before {
+    content: "📈";
+}
+
+.fas.fa-magic::before {
+    content: "✨";
+}
+
+.fas.fa-shield-alt::before {
+    content: "🛡️";
+}
+
+.fas.fa-rocket::before {
+    content: "🚀";
+}
+
+.fas.fa-brain::before {
+    content: "🧠";
+}
+
+.fas.fa-lightbulb::before {
+    content: "💡";
+}

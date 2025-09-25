@@ -24,6 +24,18 @@ except ImportError:
 
 app = Flask(__name__)
 
+# Add response headers for better performance
+@app.after_request
+def after_request(response):
+    # Add cache headers for static files
+    if request.endpoint == 'static':
+        response.headers['Cache-Control'] = 'public, max-age=86400'  # 24 hours
+    # Add security headers
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    return response
+
 # Try to load spaCy model with fallback
 try:
     import spacy
@@ -1524,6 +1536,11 @@ def get_suggestions(missing_entities, job_role):
         ])
     
     return suggestions[:5]
+
+@app.route('/health')
+def health_check():
+    """Simple health check endpoint for monitoring"""
+    return {'status': 'healthy', 'timestamp': str(datetime.now())}, 200
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

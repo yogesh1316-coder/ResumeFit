@@ -1,5 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<h</head>
+<body 
+    data-nltk-analysis="{{ nltk_analysis | tojson | e }}"
+    data-has-results="{{ 'true' if match_percentage else 'false' }}">
+    
+    <!-- Loading overlay -->
+    <div id="loading-overlay" style="
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        background: rgba(255,255,255,0.9); 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+    ">
+        <div style="text-align: center;">
+            <div style="
+                border: 4px solid #f3f3f3; 
+                border-top: 4px solid #4a90e2; 
+                border-radius: 50%; 
+                width: 50px; 
+                height: 50px; 
+                animation: spin 1s linear infinite; 
+                margin: 0 auto 20px;
+            "></div>
+            <div style="font-size: 18px; color: #4a90e2;">Loading ResumeFit...</div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +51,10 @@
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='enhanced_style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='icon-fallback.css') }}">
+    <!-- Font Awesome - loaded asynchronously for better performance -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body 
     data-nltk-analysis="{{ nltk_analysis | tojson | e }}"
@@ -905,6 +946,20 @@ Sent from ResumeFit Contact Form`);
                     e.preventDefault();
                     showSection('dashboard');
                 });
+            }
+            
+            // Hide loading overlay once everything is loaded
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
+            }
+        });
+        
+        // Also hide loading overlay when the window fully loads (fallback)
+        window.addEventListener('load', function() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            if (loadingOverlay) {
+                loadingOverlay.style.display = 'none';
             }
         });
     </script>
