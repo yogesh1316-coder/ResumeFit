@@ -1,0 +1,25 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Document background -->
+  <rect x="6" y="4" width="20" height="24" rx="2" ry="2" fill="#ffffff" stroke="#4a90e2" stroke-width="1.5"/>
+  
+  <!-- Document corner fold -->
+  <path d="M20 4 L20 8 L24 8 Z" fill="#e8f4f8" stroke="#4a90e2" stroke-width="1"/>
+  
+  <!-- Resume text lines -->
+  <rect x="9" y="10" width="10" height="1.5" rx="0.75" fill="#4a90e2"/>
+  <rect x="9" y="13" width="14" height="1" rx="0.5" fill="#6c757d"/>
+  <rect x="9" y="15.5" width="12" height="1" rx="0.5" fill="#6c757d"/>
+  <rect x="9" y="18" width="8" height="1" rx="0.5" fill="#6c757d"/>
+  
+  <!-- AI/Tech element - circuit pattern -->
+  <circle cx="21" cy="20" r="3" fill="#28a745" stroke="#ffffff" stroke-width="1"/>
+  <circle cx="21" cy="20" r="1" fill="#ffffff"/>
+  
+  <!-- Connection lines for AI element -->
+  <line x1="18" y1="20" x2="24" y2="20" stroke="#28a745" stroke-width="1"/>
+  <line x1="21" y1="17" x2="21" y2="23" stroke="#28a745" stroke-width="1"/>
+  
+  <!-- Small indicator dots -->
+  <circle cx="19" cy="18" r="0.8" fill="#28a745"/>
+  <circle cx="23" cy="22" r="0.8" fill="#28a745"/>
+</svg>
