@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 """
 Startup script for the AI-Powered Resume Analyzer
-This ensures the Flask app starts from the correct directory with proper configuration
+This ensures the Flask app starts from the correct directory
 """
 
 import os
 import sys
-
-# Set production environment
-os.environ.setdefault('FLASK_ENV', 'production')
 
 # Get the directory where this script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,17 +26,12 @@ try:
         host = '0.0.0.0'
         debug = os.environ.get('FLASK_ENV') != 'production'
         
-        print(f"Environment: {os.environ.get('FLASK_ENV', 'development')}")
         print(f"Starting Flask app on {host}:{port} (debug={debug})")
         app.run(host=host, port=port, debug=debug)
         
 except ImportError as e:
     print(f"Import error: {e}")
-    import traceback
-    traceback.print_exc()
     sys.exit(1)
 except Exception as e:
     print(f"Error starting application: {e}")
-    import traceback
-    traceback.print_exc()
     sys.exit(1)
