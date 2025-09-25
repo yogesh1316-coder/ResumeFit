@@ -22,7 +22,12 @@ try:
     
     if __name__ == '__main__':
         print("Starting Flask application...")
-        app.run(debug=True, host='127.0.0.1', port=5000)
+        port = int(os.environ.get('PORT', 5000))
+        host = '0.0.0.0'
+        debug = os.environ.get('FLASK_ENV') != 'production'
+        
+        print(f"Starting Flask app on {host}:{port} (debug={debug})")
+        app.run(host=host, port=port, debug=debug)
         
 except ImportError as e:
     print(f"Import error: {e}")

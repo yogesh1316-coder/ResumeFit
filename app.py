@@ -1604,4 +1604,10 @@ def index():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    host = '0.0.0.0'
+    debug = os.environ.get('FLASK_ENV') != 'production'
+    
+    print(f"Starting Flask app on {host}:{port} (debug={debug})")
+    app.run(host=host, port=port, debug=debug)
