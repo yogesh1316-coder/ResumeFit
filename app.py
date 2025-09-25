@@ -17,7 +17,28 @@ from docx import Document
 import os
 
 app = Flask(__name__)
-nlp = spacy.load('en_core_web_sm')
+
+# Load spaCy model with error handling
+try:
+    nlp = spacy.load('en_core_web_sm')
+    print("Successfully loaded spaCy model: en_core_web_sm")
+except OSError:
+    print("Warning: en_core_web_sm model not found. Trying alternative approaches...")
+    try:
+        # Try to download the model
+        os.system("python -m spacy download en_core_web_sm")
+        nlp = spacy.load('en_core_web_sm')
+        print("Downloaded and loaded spaCy model: en_core_web_sm")
+    except Exception as e:
+        print(f"Failed to load spaCy model: {e}")
+        # Use a smaller model as fallback
+        try:
+            nlp = spacy.load('en_core_web_md')
+            print("Using fallback model: en_core_web_md")
+        except:
+            # Create a basic nlp object with just tokenization
+            nlp = spacy.blank('en')
+            print("Using basic English tokenizer as fallback")
 
 # Initialize NLTK components
 try:
@@ -1523,4 +1544,5 @@ def index():
     )
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
