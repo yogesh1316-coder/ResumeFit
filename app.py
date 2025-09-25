@@ -63,63 +63,139 @@ IGNORE_LIST = [
     "MSWORD", "POWERPOINT", "TALLY", "MYSQL"
 ]
 
-# Training data for job role prediction
+# Enhanced training data for job role prediction with more comprehensive patterns
 JOB_TRAINING_DATA = {
     "Data Scientist": [
-        "python machine learning data analysis pandas numpy scikit-learn statistics modeling",
-        "sql python data mining statistical analysis machine learning algorithms deep learning",
-        "data visualization tableau powerbi python r statistics predictive modeling analytics",
-        "machine learning tensorflow pytorch neural networks data science python statistics",
-        "big data hadoop spark python data analysis machine learning statistical modeling"
+        "python machine learning data analysis pandas numpy scikit-learn statistics modeling predictive analytics",
+        "sql python data mining statistical analysis machine learning algorithms deep learning neural networks",
+        "data visualization tableau powerbi python r statistics predictive modeling analytics data insights",
+        "machine learning tensorflow pytorch neural networks data science python statistics mathematical modeling",
+        "big data hadoop spark python data analysis machine learning statistical modeling data processing",
+        "data analytics business intelligence statistics machine learning python sql data warehousing",
+        "predictive modeling regression classification clustering statistical analysis data mining algorithms",
+        "artificial intelligence deep learning computer vision natural language processing data science",
+        "statistical computing r python data analysis hypothesis testing experimental design analytics"
     ],
     "Software Engineer": [
-        "java spring boot microservices rest api backend development software engineering",
-        "python django flask web development backend apis database programming",
-        "javascript react nodejs full stack development web applications frontend backend",
-        "c++ software development algorithms data structures object oriented programming",
-        "software engineering design patterns testing debugging version control git"
+        "java spring boot microservices rest api backend development software engineering object oriented programming",
+        "python django flask web development backend apis database programming software architecture",
+        "javascript react nodejs full stack development web applications frontend backend software development",
+        "c++ software development algorithms data structures object oriented programming system programming",
+        "software engineering design patterns testing debugging version control git agile development",
+        "full stack development web applications database design software architecture programming languages",
+        "backend development api design microservices software engineering database integration",
+        "software development lifecycle agile methodologies version control testing deployment automation",
+        "programming languages software engineering web development mobile applications system design"
     ],
     "Frontend Developer": [
-        "html css javascript react angular vue frontend development responsive design",
-        "javascript typescript react redux frontend web development user interface",
-        "css html sass bootstrap responsive design frontend development user experience",
-        "react angular javascript frontend development single page applications ui ux",
-        "web development frontend javascript css html responsive design mobile first"
-    ],
-    "DevOps Engineer": [
-        "docker kubernetes aws cloud infrastructure deployment automation ci cd",
-        "linux bash scripting automation infrastructure docker containers orchestration",
-        "aws azure cloud infrastructure terraform ansible devops automation deployment",
-        "jenkins ci cd pipeline automation docker kubernetes infrastructure as code",
-        "monitoring logging infrastructure automation cloud platforms devops practices"
+        "html css javascript react angular vue frontend development responsive design user interface",
+        "javascript typescript react redux frontend web development user interface user experience",
+        "css html sass bootstrap responsive design frontend development user experience mobile first",
+        "react angular javascript frontend development single page applications ui ux design",
+        "web development frontend javascript css html responsive design mobile first progressive web apps",
+        "user interface design javascript frontend frameworks react vue angular responsive web design",
+        "frontend development html5 css3 javascript dom manipulation cross browser compatibility",
+        "responsive web design mobile first css preprocessors javascript frameworks ui components",
+        "web accessibility frontend optimization performance tuning user experience design"
     ],
     "Backend Developer": [
-        "java spring boot rest api microservices backend development database design",
-        "python django flask rest api backend development database postgresql mysql",
-        "nodejs express mongodb rest api backend development server side programming",
-        "database design sql postgresql mysql backend development api design",
-        "microservices architecture backend development rest api database design"
+        "java spring boot rest api microservices backend development database design server programming",
+        "python django flask rest api backend development database postgresql mysql server architecture",
+        "nodejs express mongodb rest api backend development server side programming database design",
+        "database design sql postgresql mysql backend development api design data modeling",
+        "microservices architecture backend development rest api database design system architecture",
+        "server side development api design database optimization backend programming system design",
+        "rest api graphql backend development microservices database integration server architecture",
+        "backend programming server development database design api development system optimization",
+        "cloud computing backend development aws azure database management server infrastructure"
+    ],
+    "DevOps Engineer": [
+        "docker kubernetes aws cloud infrastructure deployment automation ci cd pipeline management",
+        "linux bash scripting automation infrastructure docker containers orchestration system administration",
+        "aws azure cloud infrastructure terraform ansible devops automation deployment continuous integration",
+        "jenkins ci cd pipeline automation docker kubernetes infrastructure as code deployment strategies",
+        "monitoring logging infrastructure automation cloud platforms devops practices site reliability",
+        "containerization docker kubernetes microservices orchestration cloud native infrastructure",
+        "infrastructure as code terraform ansible configuration management cloud automation devops",
+        "continuous integration continuous deployment jenkins gitlab ci automation testing deployment",
+        "cloud computing aws azure gcp infrastructure monitoring system administration devops practices"
     ],
     "Mobile Developer": [
-        "android java kotlin mobile development android studio mobile applications",
-        "ios swift xcode mobile development iphone ipad applications app store",
-        "react native javascript mobile development cross platform ios android",
-        "flutter dart mobile development cross platform android ios applications",
-        "mobile development android ios react native flutter cross platform"
+        "android java kotlin mobile development android studio mobile applications native development",
+        "ios swift xcode mobile development iphone ipad applications app store native ios",
+        "react native javascript mobile development cross platform ios android hybrid applications",
+        "flutter dart mobile development cross platform android ios applications mobile ui",
+        "mobile development android ios react native flutter cross platform native hybrid apps",
+        "native mobile development android kotlin ios swift mobile applications user interface",
+        "cross platform development react native flutter xamarin mobile applications hybrid development",
+        "mobile app development android ios native hybrid progressive web applications mobile ui",
+        "mobile development frameworks android studio xcode react native flutter mobile programming"
+    ],
+    "Data Engineer": [
+        "data engineering etl pipeline apache spark hadoop big data processing data warehousing",
+        "python sql data pipeline etl apache airflow data processing big data engineering",
+        "apache spark hadoop kafka data streaming real time data processing big data",
+        "data warehousing sql python etl processes data modeling data architecture",
+        "big data processing apache spark hadoop data pipeline kafka streaming data engineering",
+        "cloud data engineering aws azure data pipeline data lake data warehousing",
+        "data architecture data modeling etl pipeline data integration big data processing",
+        "streaming data processing kafka apache storm real time analytics data engineering",
+        "data pipeline automation python sql apache airflow data processing data integration"
+    ],
+    "Machine Learning Engineer": [
+        "machine learning tensorflow pytorch deep learning neural networks model deployment production",
+        "python machine learning scikit-learn deep learning tensorflow model training deployment",
+        "deep learning tensorflow pytorch computer vision natural language processing neural networks",
+        "machine learning operations mlops model deployment model monitoring production systems",
+        "artificial intelligence machine learning deep learning model development production deployment",
+        "neural networks deep learning tensorflow pytorch computer vision nlp machine learning",
+        "model deployment kubernetes docker machine learning production systems mlops automation",
+        "machine learning algorithms supervised unsupervised learning model optimization production deployment",
+        "deep learning frameworks tensorflow pytorch keras neural networks model training deployment"
     ],
     "Product Manager": [
-        "product management roadmap strategy stakeholder management agile scrum",
-        "product strategy market research user experience product development lifecycle",
-        "agile scrum product owner requirements gathering stakeholder communication",
-        "market analysis competitive research product strategy business analysis",
-        "product roadmap feature prioritization user stories product development"
+        "product management roadmap strategy stakeholder management agile scrum product development",
+        "product strategy market research user experience product development lifecycle business analysis",
+        "agile scrum product owner requirements gathering stakeholder communication product roadmap",
+        "market analysis competitive research product strategy business analysis product planning",
+        "product roadmap feature prioritization user stories product development agile methodologies",
+        "product management strategy market research competitive analysis stakeholder management",
+        "user research product strategy business requirements agile product management",
+        "product development lifecycle market analysis user experience business strategy",
+        "product strategy business analysis market research product roadmap stakeholder management"
     ],
-    "Marketing Specialist": [
-        "digital marketing seo sem social media marketing content marketing analytics",
-        "marketing strategy brand management social media campaigns market research",
-        "content marketing copywriting seo social media digital marketing campaigns",
-        "marketing analytics google analytics facebook ads digital advertising campaigns",
-        "brand marketing social media strategy content creation marketing campaigns"
+    "UI/UX Designer": [
+        "user experience design user interface design wireframing prototyping design thinking",
+        "ui ux design figma sketch adobe xd user interface design user experience",
+        "user research usability testing user experience design interface design prototyping",
+        "design systems ui components user interface design user experience prototyping",
+        "wireframing prototyping user experience design user interface design design thinking",
+        "user centered design usability testing user research interface design user experience",
+        "visual design user interface ui ux design graphic design web design",
+        "interaction design user experience design prototyping wireframing user interface",
+        "design thinking user research user experience design interface design usability"
+    ],
+    "QA Engineer": [
+        "quality assurance testing automation selenium test automation manual testing",
+        "software testing test automation selenium webdriver quality assurance bug tracking",
+        "test automation framework selenium cucumber java python testing quality assurance",
+        "manual testing automated testing test planning quality assurance software testing",
+        "testing methodologies agile testing test automation quality assurance regression testing",
+        "software quality assurance test planning test execution bug tracking defect management",
+        "automation testing selenium cypress api testing performance testing quality assurance",
+        "test driven development quality assurance software testing test automation frameworks",
+        "quality assurance testing selenium automation testing manual testing test planning"
+    ],
+    "Digital Marketing Specialist": [
+        "digital marketing seo sem social media marketing content marketing analytics google ads",
+        "marketing strategy brand management social media campaigns market research digital advertising",
+        "content marketing copywriting seo social media digital marketing campaigns email marketing",
+        "marketing analytics google analytics facebook ads digital advertising campaigns ppc marketing",
+        "brand marketing social media strategy content creation marketing campaigns digital marketing",
+        "seo search engine optimization content marketing digital marketing social media marketing",
+        "digital advertising google ads facebook ads ppc marketing social media marketing",
+        "marketing automation email marketing crm digital marketing campaign management analytics",
+        "social media marketing content creation brand management digital marketing strategy"
     ]
 }
 
@@ -145,22 +221,174 @@ def create_job_prediction_model():
 vectorizer, job_prediction_model = create_job_prediction_model()
 
 def predict_job_role(resume_text):
-    """Predict job role using ML model based on resume content"""
+    """Predict job role using enhanced ML model based on resume content"""
     try:
-        # Clean and prepare text for prediction
-        clean_text = re.sub(r'[^\w\s]', ' ', resume_text.lower())
-        clean_text = ' '.join(clean_text.split())
+        import re
+        from collections import Counter
         
-        # Transform text using the trained vectorizer
-        text_vector = vectorizer.transform([clean_text])
+        if not resume_text or len(resume_text.strip()) < 10:
+            return "Unable to determine", 0
         
-        # Get prediction and confidence
-        predicted_role = job_prediction_model.predict(text_vector)[0]
-        confidence_scores = job_prediction_model.predict_proba(text_vector)[0]
-        max_confidence = max(confidence_scores)
+        # Enhanced text preprocessing
+        def preprocess_text(text):
+            # Convert to lowercase and remove extra whitespace
+            text = re.sub(r'\s+', ' ', text.lower().strip())
+            
+            # Remove common resume noise words but keep technical terms
+            noise_words = [
+                'resume', 'cv', 'curriculum vitae', 'objective', 'summary',
+                'references available upon request', 'phone', 'email', 'address',
+                'linkedin', 'github', 'portfolio', 'website', 'profile'
+            ]
+            
+            for noise in noise_words:
+                text = re.sub(r'\b' + re.escape(noise) + r'\b', ' ', text)
+            
+            # Extract and emphasize technical skills
+            tech_pattern = r'\b(?:python|java|javascript|typescript|react|angular|vue|node|nodejs|django|flask|spring|tensorflow|pytorch|sql|mysql|postgresql|mongodb|aws|azure|docker|kubernetes|git|html|css|sass|bootstrap|api|rest|graphql|microservices|agile|scrum|machine learning|data science|analytics|tableau|powerbi|selenium|jenkins|ci\/cd|devops|linux|bash|android|ios|swift|kotlin|flutter|xamarin|c\+\+|ruby|php|scala|hadoop|spark|kafka|airflow|redis|elasticsearch|nginx|apache)\b'
+            tech_matches = re.findall(tech_pattern, text, re.IGNORECASE)
+            
+            # Emphasize technical skills by adding them multiple times
+            emphasized_tech = ' '.join(tech_matches * 2)
+            return f"{text} {emphasized_tech}"
         
-        return predicted_role, int(max_confidence * 100)
+        processed_text = preprocess_text(resume_text)
+        
+        # Prepare enhanced training data
+        training_texts = []
+        training_labels = []
+        
+        for role, descriptions in JOB_TRAINING_DATA.items():
+            for desc in descriptions:
+                training_texts.append(preprocess_text(desc))
+                training_labels.append(role)
+        
+        # Enhanced TF-IDF vectorization
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.linear_model import LogisticRegression
+        
+        vectorizer = TfidfVectorizer(
+            max_features=1000,
+            stop_words='english',
+            ngram_range=(1, 3),  # Include unigrams, bigrams, and trigrams
+            min_df=1,
+            max_df=0.8,
+            lowercase=True,
+            analyzer='word'
+        )
+        
+        # Fit and transform training data
+        X_train = vectorizer.fit_transform(training_texts)
+        
+        # Train enhanced model with better parameters
+        model = LogisticRegression(
+            random_state=42,
+            max_iter=1000,
+            C=1.0,
+            class_weight='balanced'
+        )
+        model.fit(X_train, training_labels)
+        
+        # Transform and predict
+        X_test = vectorizer.transform([processed_text])
+        prediction = model.predict(X_test)[0]
+        confidence = model.predict_proba(X_test)[0]
+        
+        # Get base confidence score
+        base_confidence = max(confidence) * 100
+        
+        # Enhanced confidence calculation with keyword matching
+        def calculate_enhanced_confidence(text, predicted_role):
+            # Define role-specific keywords with weights
+            role_keywords = {
+                "Data Scientist": {
+                    'high': ['machine learning', 'data science', 'statistical', 'analytics', 'modeling', 'tensorflow', 'pytorch', 'pandas', 'numpy', 'scikit-learn'],
+                    'medium': ['python', 'r', 'sql', 'statistics', 'data', 'analysis', 'visualization', 'tableau', 'powerbi'],
+                    'low': ['research', 'insights', 'patterns', 'trends', 'hypothesis']
+                },
+                "Software Engineer": {
+                    'high': ['software engineer', 'software development', 'programming', 'algorithms', 'data structures'],
+                    'medium': ['java', 'python', 'c++', 'javascript', 'spring', 'django', 'flask', 'api', 'backend', 'frontend'],
+                    'low': ['coding', 'development', 'application', 'system', 'architecture']
+                },
+                "Frontend Developer": {
+                    'high': ['frontend', 'ui', 'user interface', 'responsive design', 'web development'],
+                    'medium': ['html', 'css', 'javascript', 'react', 'angular', 'vue', 'sass', 'bootstrap'],
+                    'low': ['design', 'user experience', 'mobile', 'browser', 'dom']
+                },
+                "Backend Developer": {
+                    'high': ['backend', 'server', 'api', 'microservices', 'database design'],
+                    'medium': ['java', 'python', 'nodejs', 'spring', 'django', 'express', 'sql', 'mongodb'],
+                    'low': ['server side', 'integration', 'architecture', 'performance', 'scalability']
+                },
+                "DevOps Engineer": {
+                    'high': ['devops', 'ci/cd', 'infrastructure', 'deployment', 'automation'],
+                    'medium': ['docker', 'kubernetes', 'aws', 'azure', 'jenkins', 'terraform', 'ansible'],
+                    'low': ['cloud', 'monitoring', 'scripting', 'pipeline', 'orchestration']
+                },
+                "Mobile Developer": {
+                    'high': ['mobile development', 'android', 'ios', 'mobile app'],
+                    'medium': ['java', 'kotlin', 'swift', 'react native', 'flutter', 'xamarin'],
+                    'low': ['app store', 'mobile', 'native', 'cross platform', 'hybrid']
+                },
+                "Machine Learning Engineer": {
+                    'high': ['machine learning engineer', 'ml', 'deep learning', 'neural networks', 'model deployment'],
+                    'medium': ['tensorflow', 'pytorch', 'scikit-learn', 'python', 'computer vision', 'nlp'],
+                    'low': ['ai', 'artificial intelligence', 'training', 'optimization', 'feature engineering']
+                },
+                "Data Engineer": {
+                    'high': ['data engineer', 'data pipeline', 'etl', 'big data'],
+                    'medium': ['spark', 'hadoop', 'kafka', 'airflow', 'python', 'sql'],
+                    'low': ['data processing', 'warehousing', 'streaming', 'batch processing']
+                },
+                "Product Manager": {
+                    'high': ['product manager', 'product management', 'roadmap', 'stakeholder management'],
+                    'medium': ['agile', 'scrum', 'product owner', 'market research', 'strategy'],
+                    'low': ['requirements', 'business analysis', 'user stories', 'prioritization']
+                },
+                "UI/UX Designer": {
+                    'high': ['ui designer', 'ux designer', 'user experience', 'user interface', 'design thinking'],
+                    'medium': ['figma', 'sketch', 'adobe xd', 'wireframing', 'prototyping'],
+                    'low': ['usability', 'user research', 'visual design', 'interaction design']
+                },
+                "QA Engineer": {
+                    'high': ['qa engineer', 'quality assurance', 'test automation', 'testing'],
+                    'medium': ['selenium', 'cypress', 'automated testing', 'manual testing'],
+                    'low': ['bug tracking', 'test planning', 'regression testing', 'defect management']
+                },
+                "Digital Marketing Specialist": {
+                    'high': ['digital marketing', 'marketing specialist', 'seo', 'social media marketing'],
+                    'medium': ['google ads', 'facebook ads', 'content marketing', 'analytics'],
+                    'low': ['brand management', 'campaigns', 'email marketing', 'ppc']
+                }
+            }
+            
+            # Calculate keyword bonus
+            bonus = 0
+            if predicted_role in role_keywords:
+                keywords = role_keywords[predicted_role]
+                text_lower = text.lower()
+                
+                for keyword in keywords.get('high', []):
+                    if keyword in text_lower:
+                        bonus += 12
+                for keyword in keywords.get('medium', []):
+                    if keyword in text_lower:
+                        bonus += 6
+                for keyword in keywords.get('low', []):
+                    if keyword in text_lower:
+                        bonus += 2
+            
+            # Apply bonus with diminishing returns
+            enhanced_confidence = base_confidence + min(bonus, 25)
+            return min(enhanced_confidence, 92)  # Cap at 92%
+        
+        final_confidence = calculate_enhanced_confidence(resume_text, prediction)
+        
+        return prediction, int(final_confidence)
+        
     except Exception as e:
+        print(f"Job prediction error: {e}")
         return "General Software Engineer", 75
 
 def analyze_resume_content(resume_text):
@@ -357,84 +585,150 @@ def extract_text(file_storage):
             return file_storage.read().decode('latin-1')
 
 def is_likely_name(text):
-    """Ultra-accurate name detection with comprehensive validation"""
+    """Enhanced name detection with intelligent pattern recognition"""
     if not text or not text.strip():
         return False
         
     words = text.strip().split()
     text_clean = text.strip()
     text_upper = text_clean.upper()
+    text_lower = text_clean.lower()
     
-    # Basic validation
+    # Basic validation - length and word count
     if (len(words) < 1 or len(words) > 4 or
         text_upper in IGNORE_LIST or
-        any(char.isdigit() for char in text_clean)):
+        any(char.isdigit() for char in text_clean) or
+        len(text_clean) > 50):  # Names shouldn't be too long
         return False
     
-    # Comprehensive keyword exclusions
-    exclusion_keywords = [
-        # Contact and tech terms
-        'phone', 'email', 'mobile', 'contact', 'linkedin', 'github', 'website', 'www', 'http', 'tel',
+    # Company/Organization indicators (definitive non-names)
+    company_indicators = {
+        'company', 'corp', 'corporation', 'inc', 'incorporated', 'ltd', 'limited', 'llc',
+        'solutions', 'systems', 'technologies', 'services', 'consulting', 'software',
+        'tech', 'it', 'information', 'technology', 'pvt', 'private', 'public',
+        'enterprise', 'enterprises', 'group', 'international', 'global', 'india',
+        'industries', 'foundation', 'institute', 'organization', 'association'
+    }
+    
+    # Check if any word in the text is a company indicator
+    for word in words:
+        if word.lower() in company_indicators:
+            return False
+    
+    # Technical terms that are definitely not names
+    technical_terms = {
+        'api', 'ui', 'ux', 'css', 'html', 'sql', 'xml', 'json', 'rest', 'soap', 'http', 'https',
+        'tcp', 'ip', 'dns', 'url', 'uri', 'cdn', 'aws', 'gcp', 'sdk', 'ide', 'cli', 'gui',
+        'ctr', 'kpi', 'roi', 'etl', 'crm', 'erp', 'cms', 'iot', 'nlp', 'ml', 'ai', 'ml',
+        'devops', 'cicd', 'agile', 'scrum', 'kanban', 'mvp', 'poc', 'qa', 'qc', 'sqa',
+        'backend', 'frontend', 'fullstack', 'saas', 'paas', 'iaas', 'nosql', 'rdbms'
+    }
+    
+    # Immediate rejection for technical terms
+    if text_lower in technical_terms:
+        return False
+    
+    # Strong exclusions - definitive non-names
+    strong_exclusions = [
         # Resume sections
         'objective', 'summary', 'about', 'skills', 'education', 'experience', 'projects', 'resume', 'cv',
         'certifications', 'achievements', 'interests', 'languages', 'profile', 'career', 'personal',
-        # Address terms
-        'address', 'street', 'road', 'avenue', 'lane', 'city', 'state', 'country', 'pin', 'zip', 'postal',
-        # Common false positive patterns
+        'responsibilities', 'duties', 'accomplishments', 'awards', 'honors', 'activities',
+        
+        # Academic terms
+        'coursework', 'relevant', 'course', 'courses', 'curriculum', 'academic', 'semester', 'year',
+        'gpa', 'grade', 'marks', 'score', 'cgpa', 'percentage', 'transcript', 'syllabus', 'subject',
+        'major', 'minor', 'specialization', 'concentration', 'thesis', 'dissertation', 'research',
+        'internship', 'training', 'workshop', 'seminar', 'conference', 'publication', 'paper',
+        
+        # Professional terms
+        'position', 'designation', 'title', 'department', 'company', 'organization', 'employer',
+        'manager', 'supervisor', 'team', 'project', 'developer', 'engineer', 'analyst', 'consultant',
+        
+        # Contact terms
+        'phone', 'email', 'mobile', 'contact', 'linkedin', 'github', 'website', 'www', 'http', 'tel',
+        'address', 'street', 'road', 'avenue', 'lane', 'city', 'state', 'country', 'pin', 'zip',
+        
+        # Technical terms
+        'programming', 'software', 'hardware', 'database', 'network', 'system', 'application',
+        'development', 'testing', 'debugging', 'coding', 'scripting', 'framework', 'library',
+        
+        # Common false positives
         'india', 'indian', 'engineering', 'college', 'university', 'institute', 'technology', 'science',
-        'bachelor', 'master', 'degree', 'diploma', 'certificate', 'graduation', 'percent', 'percentage'
+        'bachelor', 'master', 'degree', 'diploma', 'certificate', 'graduation'
     ]
     
-    text_lower = text_clean.lower()
-    if any(keyword in text_lower for keyword in exclusion_keywords):
+    # Check for strong exclusions
+    if any(exclusion in text_lower for exclusion in strong_exclusions):
         return False
     
-    # Check for common location suffixes/patterns
-    location_patterns = [
-        r'.*\d{5,6}$',  # Ends with PIN code
-        r'.*,\s*(india|usa|uk|canada)$',  # Ends with country
-        r'.*(nagar|city|town|village|district|state).*',  # Contains location terms
-        r'.*(north|south|east|west).*',  # Directional terms
+    # Specific phrase exclusions
+    excluded_phrases = [
+        'relevant coursework', 'course work', 'academic coursework', 'professional experience',
+        'work experience', 'technical skills', 'soft skills', 'computer skills', 'programming skills',
+        'project management', 'team leadership', 'problem solving', 'data analysis', 'machine learning',
+        'artificial intelligence', 'web development', 'software development', 'database management',
+        'network administration', 'quality assurance', 'user interface', 'user experience',
+        'business analysis', 'system administration', 'cloud computing', 'cyber security'
     ]
     
-    for pattern in location_patterns:
-        if re.match(pattern, text_lower):
-            return False
+    if text_lower in excluded_phrases:
+        return False
     
-    # Validate word patterns
+    # Additional checks for company names
+    if (len(words) > 2 and  # Companies often have 3+ words
+        any(word.isupper() and len(word) > 1 for word in words) and  # All caps words
+        not all(word[0].isupper() and word[1:].islower() for word in words if word.isalpha())):  # Not proper name format
+        return False
+    
+    # Pattern-based validation for actual names
+    name_patterns = [
+        r'^[A-Z][a-z]+(?:\s[A-Z][a-z]+){0,3}$',  # Title case names (John Smith)
+        r'^[A-Z][a-z]+(?:\s[A-Z]\.){0,2}(?:\s[A-Z][a-z]+)?$'  # Names with middle initials (John A. Smith)
+    ]
+    
+    # Must match at least one name pattern
+    if not any(re.match(pattern, text_clean) for pattern in name_patterns):
+        return False
+    
+    # Validate each word
     for word in words:
-        if not word:
-            continue
-            
-        # Must be alphabetic
-        if not word.isalpha():
-            return False
-            
-        # Check capitalization (allow Title Case or ALL CAPS)
-        if not (word[0].isupper() and (word[1:].islower() or word.isupper())):
+        if not word or len(word) < 2 or len(word) > 20:
             return False
         
-        # Individual word length check
-        if len(word) < 2 or len(word) > 20:
+        # Must be alphabetic or single letter followed by dot (middle initial)
+        if not (word.isalpha() or (len(word) == 2 and word[1] == '.' and word[0].isalpha())):
             return False
-    
-    # Additional validation for single words
-    if len(words) == 1:
-        word = words[0]
-        # Single word must be at least 3 chars for names, allow some common short names
-        if len(word) < 3 and word.lower() not in ['jo', 'al', 'ed', 'li', 'bo', 'ty']:
+        
+        # Check if word looks like a common name part
+        word_lower = word.lower().rstrip('.')
+        
+        # Exclude technical terms at word level too
+        if word_lower in technical_terms or word_lower in company_indicators:
             return False
-    
-    # Check if it looks like a person's name pattern
-    # Names typically have 1-3 words, each starting with capital
-    if len(words) > 4:
-        return False
+        
+        # Exclude obvious non-name words
+        non_name_words = {
+            'the', 'and', 'or', 'but', 'for', 'with', 'from', 'into', 'upon', 'over', 'under',
+            'above', 'below', 'through', 'during', 'before', 'after', 'between', 'among',
+            'this', 'that', 'these', 'those', 'what', 'which', 'who', 'where', 'when', 'why',
+            'how', 'all', 'any', 'each', 'every', 'some', 'many', 'much', 'few', 'little',
+            'more', 'most', 'less', 'least', 'good', 'better', 'best', 'bad', 'worse', 'worst'
+        }
+        
+        if word_lower in non_name_words:
+            return False
     
     return True
 
 def extract_name(text, entities):
     """Ultra-accurate name extraction with comprehensive validation"""
-    lines = [line.strip() for line in text.splitlines()[:10]]
+    lines = [line.strip() for line in text.splitlines()[:15] if line.strip()]
+    
+    # Debug: Print the first few lines to understand the structure
+    print(f"DEBUG - Resume first 5 lines:")
+    for i, line in enumerate(lines[:5]):
+        print(f"  Line {i}: '{line}'")
     
     # Known location/place names to exclude (common false positives)
     location_names = {
@@ -453,119 +747,95 @@ def extract_name(text, entities):
         'india', 'united states', 'usa', 'uk', 'canada', 'australia', 'singapore', 'malaysia', 'thailand'
     }
     
-    # Strategy 1: Check first line specifically (most common position for names)
-    if lines:
-        first_line = lines[0].strip()
-        
-        # Clean the first line - remove common prefixes
-        first_line_clean = re.sub(r'^(resume|cv|curriculum vitae)[:\s]*', '', first_line, flags=re.IGNORECASE).strip()
-        
-        # Check if first line is a clear name (not containing contact info or locations)
-        if (first_line_clean and 
-            is_likely_name(first_line_clean) and
-            first_line_clean.lower() not in location_names and
-            len(first_line_clean.split()) <= 3 and
-            not any(keyword in first_line_clean.lower() for keyword in 
-                   ['phone', 'email', '@', 'mobile', 'contact', 'address', 'linkedin', 'github', 'www', 'http'])):
-            return first_line_clean
+    # Company names and organization patterns to exclude
+    company_exclusions = {
+        'codtech', 'it', 'solutions', 'technologies', 'systems', 'services', 'consulting',
+        'software', 'tech', 'corporation', 'corp', 'inc', 'ltd', 'limited', 'pvt', 'private',
+        'company', 'enterprises', 'group', 'international', 'global', 'industries', 'infosys',
+        'tcs', 'wipro', 'accenture', 'cognizant', 'capgemini', 'deloitte', 'microsoft', 'google',
+        'amazon', 'apple', 'facebook', 'meta', 'netflix', 'oracle', 'ibm', 'adobe', 'salesforce'
+    }
     
-    # Strategy 2: Look for PERSON entities with strict validation
-    person_entities = [(ent_text, ent_label) for ent_text, ent_label in entities if ent_label == "PERSON"]
+    # Strategy 1: Simple pattern matching for names in first few lines
+    def looks_like_name(text):
+        """Simple check if text looks like a personal name"""
+        if not text or len(text.strip()) < 2:
+            return False
+        
+        words = text.strip().split()
+        if len(words) < 1 or len(words) > 4:
+            return False
+        
+        # Check if it contains numbers, symbols, or common non-name patterns
+        if any(char.isdigit() or char in '@#$%&*()[]{}' for char in text):
+            return False
+        
+        # Check for company indicators
+        text_lower = text.lower()
+        if any(comp in text_lower for comp in company_exclusions):
+            return False
+        
+        # Check if it's a location
+        if text_lower in location_names:
+            return False
+        
+        # Simple name pattern: starts with capital letters
+        for word in words:
+            if not word[0].isupper():
+                return False
+        
+        return True
     
-    # Score each person entity based on position and context
-    scored_entities = []
-    for ent_text, ent_label in person_entities:
-        if not is_likely_name(ent_text) or ent_text.lower() in location_names:
+    # Check first few lines for name patterns
+    for i, line in enumerate(lines[:5]):
+        line_clean = line.strip()
+        
+        # Skip empty lines
+        if not line_clean:
             continue
-            
-        score = 0
-        found_line_index = -1
-        context_line = ""
         
-        # Find which line contains this entity
-        for i, line in enumerate(lines):
-            if ent_text.lower() in line.lower():
-                found_line_index = i
-                context_line = line.lower()
-                break
-        
-        if found_line_index == -1:
+        # Skip lines that are clearly headers or contact info
+        line_lower = line_clean.lower()
+        if (any(keyword in line_lower for keyword in ['resume', 'cv', 'phone', 'email', '@', 'linkedin', 'github', 'http']) or
+            len([c for c in line_clean if c.isdigit()]) > 3):  # Too many numbers
             continue
-            
-        # Scoring criteria
-        # Higher score for earlier lines
-        score += max(10 - found_line_index, 0)
         
-        # Bonus for being in first 3 lines
-        if found_line_index < 3:
-            score += 5
+        # Check if the entire line could be a name
+        if looks_like_name(line_clean) and len(line_clean.split()) <= 3:
+            print(f"DEBUG - Found potential name in line {i}: '{line_clean}'")
+            return line_clean
         
-        # Penalty for being in lines with address keywords
-        if any(addr_keyword in context_line for addr_keyword in 
-               ['address', 'street', 'st,', 'road', 'avenue', 'lane', 'city', 'pin', 'zip', 'state']):
-            score -= 10
+        # Check if the line starts with a name (extract first 2-3 words)
+        words = line_clean.split()
+        if len(words) >= 2:
+            potential_name = ' '.join(words[:3])  # Take first 3 words maximum
+            if looks_like_name(potential_name):
+                print(f"DEBUG - Found potential name at start of line {i}: '{potential_name}'")
+                return potential_name
         
-        # Penalty for being in lines with contact info
-        if any(contact_keyword in context_line for contact_keyword in 
-               ['phone', 'email', '@', 'mobile', 'contact', 'linkedin', 'github', 'tel']):
-            score -= 5
-        
-        # Bonus for being standalone on a line (likely to be a name)
-        if context_line.strip().lower() == ent_text.lower():
-            score += 8
-        
-        # Bonus for proper capitalization patterns
-        if all(word[0].isupper() for word in ent_text.split() if word):
-            score += 3
-        
-        scored_entities.append((score, ent_text, found_line_index))
-    
-    # Return the highest scored entity
-    if scored_entities:
-        scored_entities.sort(reverse=True, key=lambda x: x[0])
-        best_entity = scored_entities[0]
-        if best_entity[0] > 0:  # Only return if score is positive
-            return best_entity[1]
-    
-    # Strategy 3: Look for explicit name patterns in text
-    name_patterns = [
-        r'(?:name|full name)[:\s]+([A-Z][a-zA-Z\s]{2,30})',
-        r'^([A-Z][a-z]+ [A-Z][a-z]+(?:\s[A-Z][a-z]+)?)(?:\s|$)',
-        r'resume (?:of|for) ([A-Z][a-zA-Z\s]{2,30})',
-        r'^([A-Z]{2,}(?:\s[A-Z]{2,})*)$'  # All caps names
-    ]
-    
-    for pattern in name_patterns:
-        matches = re.finditer(pattern, text, re.MULTILINE | re.IGNORECASE)
-        for match in matches:
-            name_candidate = match.group(1).strip()
-            if (is_likely_name(name_candidate) and 
-                name_candidate.lower() not in location_names and
-                len(name_candidate.split()) <= 4):
+        # Single word names (first names only)
+        if len(words) >= 1 and looks_like_name(words[0]) and len(words[0]) > 2:
+            # Check if it's followed by a last name or initial
+            if len(words) > 1 and (looks_like_name(words[1]) or (len(words[1]) == 1 and words[1].isupper())):
+                name_candidate = f"{words[0]} {words[1]}"
+                print(f"DEBUG - Found name candidate: '{name_candidate}'")
                 return name_candidate
     
-    # Strategy 4: Advanced line-by-line analysis with context awareness
-    for i, line in enumerate(lines[:5]):
-        line = line.strip()
-        line_lower = line.lower()
-        
-        # Skip lines that are clearly not names
-        if (not line or
-            any(skip_keyword in line_lower for skip_keyword in 
-                ['phone', 'email', '@', 'mobile', 'contact', 'address', 'linkedin', 'github', 'www', 'http',
-                 'objective', 'summary', 'about', 'skills', 'education', 'experience', 'projects']) or
-            any(char.isdigit() for char in line)):
-            continue
-        
-        # Check if line could be a name
-        words = line.split()
-        if 1 <= len(words) <= 3:
-            # Check if all words look like name parts
-            if (all(word[0].isupper() and word[1:].islower() or word.isupper() for word in words if word.isalpha()) and
-                all(word.lower() not in location_names for word in words) and
-                is_likely_name(line)):
-                return line
+    # Strategy 2: Look for PERSON entities but with more lenient validation
+    person_entities = [(ent_text, ent_label) for ent_text, ent_label in entities if ent_label == "PERSON"]
     
+    for ent_text, ent_label in person_entities:
+        # Basic validation
+        if (ent_text and 
+            len(ent_text.split()) <= 4 and
+            not any(char.isdigit() for char in ent_text) and
+            ent_text.lower() not in location_names and
+            not any(comp in ent_text.lower() for comp in company_exclusions)):
+            
+            print(f"DEBUG - Found valid PERSON entity: '{ent_text}'")
+            return ent_text
+    
+    print("DEBUG - No valid name found, returning 'Not found'")
     return "Not found"
 
 def extract_location(text, entities):
@@ -692,40 +962,49 @@ def analyze_entities(doc, resume_text):
     # Get ML-based job prediction
     predicted_role, ml_confidence = predict_job_role(resume_text)
     
-    # Calculate resume completeness score (0-100)
+    # Enhanced scoring with more realistic weights and bonuses
     completeness_factors = {
-        'name': 20,      # Name found
-        'location': 15,  # Location found  
-        'dates': 15,     # Education/work dates
-        'skills': 25,    # Technical skills found
-        'experience': 15, # Experience level detected
-        'achievements': 10 # Percentages/achievements
+        'name': 15,      # Name found (reduced weight)
+        'location': 10,  # Location found (reduced weight) 
+        'dates': 10,     # Education/work dates (reduced weight)
+        'skills': 30,    # Technical skills found (increased weight)
+        'experience': 20, # Experience level detected (increased weight)
+        'achievements': 15 # Percentages/achievements (increased weight)
     }
+    
+    # Base score starts higher for any valid resume
+    base_score = 35  # Every resume starts with 35% base score
     
     # Initialize score breakdown for transparency
     score_breakdown = {
         'ml_confidence': ml_confidence,
         'completeness_score': 0,
+        'base_score': base_score,
         'components': {
-            'name': {'score': 0, 'max': 20, 'found': False, 'value': "Not found"},
-            'location': {'score': 0, 'max': 15, 'found': False, 'value': "Not found"},
-            'dates': {'score': 0, 'max': 15, 'found': False, 'value': "Not found"},
-            'skills': {'score': 0, 'max': 25, 'found': False, 'value': []},
-            'experience': {'score': 0, 'max': 15, 'found': False, 'value': "Entry Level"},
-            'achievements': {'score': 0, 'max': 10, 'found': False, 'value': "Not found"}
+            'name': {'score': 0, 'max': 15, 'found': False, 'value': "Not found"},
+            'location': {'score': 0, 'max': 10, 'found': False, 'value': "Not found"},
+            'dates': {'score': 0, 'max': 10, 'found': False, 'value': "Not found"},
+            'skills': {'score': 0, 'max': 30, 'found': False, 'value': []},
+            'experience': {'score': 0, 'max': 20, 'found': False, 'value': "Entry Level"},
+            'achievements': {'score': 0, 'max': 15, 'found': False, 'value': "Not found"}
         }
     }
     
-    completeness_score = 0
+    completeness_score = base_score  # Start with base score
     content_analysis = analyze_resume_content(resume_text)
     
-    # Check each factor and update breakdown
+    # Check each factor and update breakdown with enhanced scoring
     name_value = extract_name(resume_text, entities)
     if name_value != "Not found":
         completeness_score += completeness_factors['name']
         score_breakdown['components']['name']['score'] = completeness_factors['name']
         score_breakdown['components']['name']['found'] = True
         score_breakdown['components']['name']['value'] = name_value
+    else:
+        # Partial credit if resume has some structure
+        if len(resume_text.split()) > 50:  # Has substantial content
+            completeness_score += completeness_factors['name'] * 0.3  # 30% partial credit
+            score_breakdown['components']['name']['score'] = int(completeness_factors['name'] * 0.3)
 
     location_value = extract_location(resume_text, entities)
     if location_value != "Not found":
@@ -741,19 +1020,48 @@ def analyze_entities(doc, resume_text):
         score_breakdown['components']['dates']['found'] = True
         score_breakdown['components']['dates']['value'] = dates_value
     
+    # Enhanced skills scoring with progressive bonuses
     if content_analysis['skills']:
-        # Scale based on number of skills (more skills = higher score)
-        skill_score = min(len(content_analysis['skills']) * 3, completeness_factors['skills'])
+        skill_count = len(content_analysis['skills'])
+        if skill_count >= 5:
+            skill_score = completeness_factors['skills']  # Full points for 5+ skills
+        elif skill_count >= 3:
+            skill_score = int(completeness_factors['skills'] * 0.8)  # 80% for 3-4 skills
+        else:
+            skill_score = int(completeness_factors['skills'] * 0.5)  # 50% for 1-2 skills
+        
         completeness_score += skill_score
         score_breakdown['components']['skills']['score'] = skill_score
         score_breakdown['components']['skills']['found'] = True
         score_breakdown['components']['skills']['value'] = content_analysis['skills']
+    else:
+        # Check if resume mentions any technical terms for partial credit
+        tech_indicators = ['python', 'java', 'programming', 'software', 'development', 'coding', 
+                          'database', 'web', 'mobile', 'application', 'system', 'technology']
+        resume_lower = resume_text.lower()
+        if any(indicator in resume_lower for indicator in tech_indicators):
+            partial_skill_score = int(completeness_factors['skills'] * 0.3)
+            completeness_score += partial_skill_score
+            score_breakdown['components']['skills']['score'] = partial_skill_score
     
-    if content_analysis['experience_level'] != "Entry Level":
-        completeness_score += completeness_factors['experience']
-        score_breakdown['components']['experience']['score'] = completeness_factors['experience']
+    # Enhanced experience scoring
+    experience_level = content_analysis['experience_level']
+    if experience_level == "Senior Level":
+        experience_score = completeness_factors['experience']
+        completeness_score += experience_score
+        score_breakdown['components']['experience']['score'] = experience_score
         score_breakdown['components']['experience']['found'] = True
-    score_breakdown['components']['experience']['value'] = content_analysis['experience_level']
+    elif experience_level == "Mid Level":
+        experience_score = int(completeness_factors['experience'] * 0.8)
+        completeness_score += experience_score
+        score_breakdown['components']['experience']['score'] = experience_score
+        score_breakdown['components']['experience']['found'] = True
+    else:  # Entry Level
+        experience_score = int(completeness_factors['experience'] * 0.5)
+        completeness_score += experience_score
+        score_breakdown['components']['experience']['score'] = experience_score
+    
+    score_breakdown['components']['experience']['value'] = experience_level
     
     achievements_value = extract_percent(entities)
     if achievements_value != "Not found":
@@ -762,23 +1070,51 @@ def analyze_entities(doc, resume_text):
         score_breakdown['components']['achievements']['found'] = True
         score_breakdown['components']['achievements']['value'] = achievements_value
     
+    # Content quality bonuses
+    word_count = len(resume_text.split())
+    if word_count > 200:  # Substantial resume content
+        completeness_score += 5
+    if word_count > 400:  # Very detailed resume
+        completeness_score += 5
+    
+    # Education level bonus
+    edu_level = content_analysis['education_level']
+    if edu_level != "Not specified":
+        if "bachelor" in edu_level.lower() or "master" in edu_level.lower() or "phd" in edu_level.lower():
+            completeness_score += 5
+        else:
+            completeness_score += 2
+    
+    # Cap the completeness score at 100
+    completeness_score = min(completeness_score, 100)
     score_breakdown['completeness_score'] = completeness_score
     
-    # Convert completeness score to percentage for display consistency
-    completeness_percentage = completeness_score  # Already 0-100 scale
+    # Improved final scoring algorithm
+    # Increase ML weight for better job matching, reduce completeness dependency
+    enhanced_ml_confidence = min(ml_confidence * 1.2, 100)  # Boost ML confidence slightly
     
-    # Final match percentage: 60% ML confidence + 40% completeness
-    # Both ml_confidence and completeness_score are on 0-100 scale
-    match_percentage = int((ml_confidence * 0.6) + (completeness_percentage * 0.4))
+    # New weighted formula: 70% Enhanced ML + 30% Completeness
+    match_percentage = int((enhanced_ml_confidence * 0.7) + (completeness_score * 0.3))
     
-    # Ensure minimum of 40% if basic info is present
-    if completeness_score > 50:
-        match_percentage = max(match_percentage, 40)
+    # Ensure reasonable minimum scores based on content quality
+    if completeness_score >= 80:
+        match_percentage = max(match_percentage, 70)  # High quality resumes get at least 70%
+    elif completeness_score >= 60:
+        match_percentage = max(match_percentage, 60)  # Good resumes get at least 60%
+    elif completeness_score >= 40:
+        match_percentage = max(match_percentage, 50)  # Basic resumes get at least 50%
+    else:
+        match_percentage = max(match_percentage, 35)  # Even poor resumes get something
+    
+    # Cap final score at 100
+    match_percentage = min(match_percentage, 100)
+    
     
     score_breakdown['final_score'] = match_percentage
-    score_breakdown['ml_weight'] = 0.6
-    score_breakdown['completeness_weight'] = 0.4
-    score_breakdown['completeness_percentage'] = completeness_percentage
+    score_breakdown['ml_weight'] = 0.7
+    score_breakdown['completeness_weight'] = 0.3
+    score_breakdown['completeness_percentage'] = completeness_score
+    score_breakdown['enhanced_ml_confidence'] = enhanced_ml_confidence
     
     # Generate suggestions based on missing information
     missing_info = []
