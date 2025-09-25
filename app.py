@@ -1525,6 +1525,24 @@ def get_suggestions(missing_entities, job_role):
     
     return suggestions[:5]
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    """Health check endpoint for deployment verification"""
+    try:
+        # Test basic functionality
+        test_text = "John Doe is a software engineer from New York with Python experience."
+        doc = nlp(test_text)
+        
+        health_status = {
+            "status": "healthy",
+            "nlp_system": "spacy" if hasattr(nlp, 'nlp') else "fallback",
+            "pdf_processing": PDF_AVAILABLE,
+            "timestamp": str(datetime.now()) if 'datetime' in globals() else "unknown"
+        }
+        return health_status, 200
+    except Exception as e:
+        return {"status": "unhealthy", "error": str(e)}, 500
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     entities = []
