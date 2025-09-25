@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request, jsonify
-import spacy
-import pdfplumber
 import re
 from datetime import datetime
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -16,8 +14,25 @@ from nltk.tag import pos_tag
 from docx import Document
 import os
 
+# Try to import pdfplumber with fallback
+try:
+    import pdfplumber
+    PDF_AVAILABLE = True
+except ImportError:
+    print("Warning: pdfplumber not available. PDF processing will be limited.")
+    PDF_AVAILABLE = False
+
 app = Flask(__name__)
-nlp = spacy.load('en_core_web_sm')
+
+# Try to load spaCy model with fallback
+try:
+    import spacy
+    nlp = spacy.load('en_core_web_sm')
+    print("SpaCy model loaded successfully")
+except Exception as e:
+    print(f"Warning: Could not load spaCy model: {e}")
+    print("Creating fallback NLP processor")
+    nlp = None
 
 # Initialize NLTK components
 try:
@@ -48,6 +63,62 @@ try:
     stop_words = set(stopwords.words('english'))
 except Exception as e:
     print(f"Warning: NLTK initialization error: {e}")
+    sia = None
+    stop_words = set()
+
+# Fallback NLP processor when spaCy is not available
+class FallbackNLP:
+    def __init__(self):
+        self.entities = []
+    
+    def __call__(self, text):
+        return FallbackDoc(text)
+
+class FallbackDoc:
+    def __init__(self, text):
+        self.text = text
+        self.ents = self._extract_entities(text)
+    
+    def _extract_entities(self, text):
+        """Extract basic entities without spaCy"""
+        entities = []
+        
+        # Simple name extraction - look for capitalized words at the beginning
+        lines = text.split('\n')[:10]
+        for line in lines:
+            words = line.strip().split()
+            if len(words) >= 2:
+                # Check if first two words are capitalized (likely names)
+                if all(word[0].isupper() and word.isalpha() for word in words[:2]):
+                    entity = FallbackEntity(' '.join(words[:2]), 'PERSON')
+                    entities.append(entity)
+        
+        # Simple location detection - common city patterns
+        import re
+        cities = ['mumbai', 'delhi', 'bangalore', 'chennai', 'hyderabad', 'pune', 'kolkata', 'ahmedabad', 'puducherry']
+        for city in cities:
+            if city in text.lower():
+                entity = FallbackEntity(city.title(), 'GPE')
+                entities.append(entity)
+        
+        # Date patterns
+        date_pattern = r'\b\d{4}\b'
+        dates = re.findall(date_pattern, text)
+        for date in dates[:3]:  # Limit to first 3 dates
+            entity = FallbackEntity(date, 'DATE')
+            entities.append(entity)
+        
+        return entities
+
+class FallbackEntity:
+    def __init__(self, text, label):
+        self.text = text
+        self.label_ = label
+
+# Use fallback if spaCy is not available
+if nlp is None:
+    nlp = FallbackNLP()
+    print("Using fallback NLP processor")
     # Fallback: use empty sentiment analyzer
     class FallbackSentimentAnalyzer:
         def polarity_scores(self, text):
@@ -553,11 +624,19 @@ def analyze_resume_with_nltk(resume_text):
 def extract_text(file_storage):
     filename = file_storage.filename.lower()
     if filename.endswith('.pdf'):
-        with pdfplumber.open(file_storage) as pdf:
-            text = ''
-            for page in pdf.pages:
-                text += page.extract_text() or ''
-        return text
+        if PDF_AVAILABLE:
+            try:
+                import pdfplumber
+                with pdfplumber.open(file_storage) as pdf:
+                    text = ''
+                    for page in pdf.pages:
+                        text += page.extract_text() or ''
+                return text
+            except Exception as e:
+                print(f"Error extracting text from PDF with pdfplumber: {e}")
+                return f"PDF file uploaded: {file_storage.filename}. Please try uploading the resume as a text file or Word document."
+        else:
+            return f"PDF processing not available. Please try uploading the resume as a text file or Word document."
     elif filename.endswith('.docx'):
         try:
             doc = Document(file_storage)
@@ -1468,6 +1547,8 @@ def index():
         
         if uploaded_file and uploaded_file.filename:
             resume_text = extract_text(uploaded_file)
+            
+            # Use appropriate NLP system (spaCy or fallback)
             doc = nlp(resume_text)
             
             # Use ML-based analysis
