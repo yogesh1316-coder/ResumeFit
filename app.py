@@ -19,10 +19,33 @@ try:
     import pdfplumber
     PDF_AVAILABLE = True
 except ImportError:
-    print("Warning: pdfplumber not available. PDF processing will be limited.")
+    app.logger.warning("pdfplumber not available. PDF processing will be limited.") if 'app' in locals() else print("Warning: pdfplumber not available")
     PDF_AVAILABLE = False
 
 app = Flask(__name__)
+
+# Production Configuration
+import os
+
+class Config:
+    SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+    
+    # Environment detection
+    FLASK_ENV = os.environ.get('FLASK_ENV', 'development')
+    RENDER = os.environ.get('RENDER')  # Render sets this environment variable
+    IS_PRODUCTION = FLASK_ENV == 'production' or RENDER is not None
+    
+    # Logging configuration
+    if IS_PRODUCTION:
+        import logging
+        logging.basicConfig(level=logging.INFO)
+        app.logger.setLevel(logging.INFO)
+    else:
+        import logging
+        logging.basicConfig(level=logging.DEBUG)
+
+# Apply configuration
+app.config.from_object(Config)
 
 # Add response headers for better performance
 @app.after_request
@@ -30,20 +53,37 @@ def after_request(response):
     # Add cache headers for static files
     if request.endpoint == 'static':
         response.headers['Cache-Control'] = 'public, max-age=86400'  # 24 hours
+    
     # Add security headers
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['X-XSS-Protection'] = '1; mode=block'
+    
+    # Production security headers
+    if Config.IS_PRODUCTION:
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+        response.headers['Content-Security-Policy'] = "default-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com mail.google.com"
+    
     return response
+
+# Error handlers for production
+@app.errorhandler(500)
+def internal_error(error):
+    app.logger.error('Server Error: %s', str(error))
+    return render_template('index.html', error_message="An internal error occurred. Please try again."), 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('index.html', error_message="Page not found."), 404
 
 # Try to load spaCy model with fallback
 try:
     import spacy
     nlp = spacy.load('en_core_web_sm')
-    print("SpaCy model loaded successfully")
+    app.logger.info("SpaCy model loaded successfully") if Config.IS_PRODUCTION else print("SpaCy model loaded successfully")
 except Exception as e:
-    print(f"Warning: Could not load spaCy model: {e}")
-    print("Creating fallback NLP processor")
+    app.logger.warning(f"Could not load spaCy model: {e}") if Config.IS_PRODUCTION else print(f"Warning: Could not load spaCy model: {e}")
+    app.logger.info("Creating fallback NLP processor") if Config.IS_PRODUCTION else print("Creating fallback NLP processor")
     nlp = None
 
 # Initialize NLTK components
@@ -1622,9 +1662,26 @@ def index():
 
 if __name__ == '__main__':
     import os
+    
+    # Production configuration
     port = int(os.environ.get('PORT', 5000))
     host = '0.0.0.0'
-    debug = os.environ.get('FLASK_ENV') != 'production'
     
+    # Environment detection
+    environment = os.environ.get('FLASK_ENV', 'development')
+    is_production = environment == 'production' or os.environ.get('RENDER')
+    
+    # Disable debug in production
+    debug = False if is_production else True
+    
+    print(f"Environment: {environment}")
+    print(f"Production mode: {is_production}")
     print(f"Starting Flask app on {host}:{port} (debug={debug})")
-    app.run(host=host, port=port, debug=debug)
+    
+    if is_production:
+        print("Running in production mode - debug disabled")
+        # In production, this should ideally be run via Gunicorn
+        app.run(host=host, port=port, debug=False, threaded=True)
+    else:
+        print("Running in development mode")
+        app.run(host=host, port=port, debug=debug)

@@ -22,12 +22,28 @@ try:
     
     if __name__ == '__main__':
         print("Starting Flask application...")
+        
+        # Production configuration
         port = int(os.environ.get('PORT', 5000))
         host = '0.0.0.0'
-        debug = os.environ.get('FLASK_ENV') != 'production'
         
+        # Environment detection
+        environment = os.environ.get('FLASK_ENV', 'development')
+        is_production = environment == 'production' or os.environ.get('RENDER')
+        
+        # Disable debug in production
+        debug = False if is_production else True
+        
+        print(f"Environment: {environment}")
+        print(f"Production mode: {is_production}")
         print(f"Starting Flask app on {host}:{port} (debug={debug})")
-        app.run(host=host, port=port, debug=debug)
+        
+        if is_production:
+            print("Running in production mode - debug disabled")
+            app.run(host=host, port=port, debug=False, threaded=True)
+        else:
+            print("Running in development mode")
+            app.run(host=host, port=port, debug=debug)
         
 except ImportError as e:
     print(f"Import error: {e}")
